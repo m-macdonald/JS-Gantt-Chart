@@ -1,0 +1,105 @@
+.gfb-gantt-wrapper{
+    --entry-color: #033b6a;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --background-color: #f9f9f9;
+    --hovered-background: #f0f0f0;
+}
+
+.gfb-gantt-wrapper{
+    position: relative;
+    min-width: 550px;
+}
+
+.gfb-gantt-headers{
+    display: grid;
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    min-height: 40px;
+}
+
+    .gfb-gantt-headers > div:not(:last-child){
+        border-right: 1px solid var(--border-color);
+    }
+
+.gfb-gantt-header{
+    display: flex;
+    padding: 10px 0px 10px 5px;
+}
+
+.gfb-gantt-sidebar-header{
+    text-align: center;
+    padding: 10px 5px 10px 5px;
+    background-color: var(--background-color);
+    border-right:1px solid var(--border-color);
+}
+
+.gfb-gantt-content{
+    position: relative;
+}
+
+.gfb-gantt-row{
+    display: grid;
+    min-height: 25px;
+    border: 1px solid var(--border-color);
+    border-top: 0;
+    border-right: 1px solid transparent;
+   
+}
+
+.gfb-gantt-sub-row-wrapper{
+    max-height: 15px;
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.gfb-gantt-row-entry{ 
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: var(--entry-color);
+}
+    .gfb-gantt-row-entry:hover{
+        box-shadow: var(--entry-color) 0px 0px 2px .1px;
+    }
+
+.gfb-gantt-lines-container{
+    display: grid;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    border: 1px solid var(--border-color);
+    z-index: 0;
+}
+
+    .gfb-gantt-lines-container > div:not(:last-child):not(.gfb-gantt-sidebar-template){
+        border-right: 1px solid var(--border-color);
+    }
+
+.gfb-gantt-row-entry-tooltip{
+    position: absolute;
+    display: none;
+    max-width: 400px;
+    background-color: #ffffff;
+    box-shadow: 0 0 5px #aaa;
+    padding: 10px;
+    z-index: 20;
+}
+
+.gfb-gantt-grouping-header{
+    background-color: var(--background-color);
+    padding: 5px 0;
+    border: 1px solid var(--border-color);
+    border-top: 0 transparent;
+    cursor: pointer;
+    user-select: none;
+}
+
+    .gfb-gantt-grouping-header:hover{
+        background-color: var(--hovered-background);
+    }
+
+.gfb-gantt{
+    overflow: auto;
+}
