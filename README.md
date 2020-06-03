@@ -16,11 +16,12 @@ idAlias:              The name of the property within the objects of the array t
 rowAlias:             The name of the property within the objects of the array that holds the header that should be given to this object's row. A string
 linkAlias:            The name of the property within the objects of the array that holds the link that should be followed when the object's entry is clicked. 
                       Passing in null will keep the chart from rendering links. A string
-tooltipAlias          The name of the property within the objects of the array that holds the html content that should be displayed when the user hovers over the chart entry. A string
-groupBy               This parameter functions like a SQL group by. Providing it to the chart will result in rows being grouped underneath collapsible headers.
+tooltipAlias:         The name of the property within the objects of the array that holds the html content that should be displayed when the user hovers over the chart entry. A string
+groupBy:              This parameter functions like a SQL group by. Providing it to the chart will result in rows being grouped underneath collapsible headers.
                       The values should be in order of decreasing importance.
                       Each of the values in the string should be a property within the objects being provided to the chart.
                       ex. 'state, county, city'
+refreshFunction:      The function that the chart should call when its refreshData() function is invoked. This function should return an                       array of objects.
 ```
 
 
