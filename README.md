@@ -1,6 +1,7 @@
 # JS-Gantt-Chart
 A Gantt Chart built using pure JS with CSS Grid and Flexbox
 
+### At the moment the chart works best with items that are all on the same day.
 
 The chart's constructor expects two parameters:
 
