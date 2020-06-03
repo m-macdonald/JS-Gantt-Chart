@@ -21,7 +21,7 @@ groupBy:              This parameter functions like a SQL group by. Providing it
                       The values should be in order of decreasing importance.
                       Each of the values in the string should be a property within the objects being provided to the chart.
                       ex. 'state, county, city'
-refreshFunction:      The function that the chart should call when its refreshData() function is invoked. This function should return an                       array of objects.
+refreshFunction:      The function that the chart should call when its refreshData() function is invoked. This function should return an array of objects.
 ```
 
 
