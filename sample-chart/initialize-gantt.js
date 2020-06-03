@@ -23,13 +23,14 @@ let data =  [
     ];
 
 
-
+//This could be an API call to grab data
 function refreshFunction() {
     return data;
 }
 
+//Parameters that the chart expects
 let params = {
-    sidebarHeader: "unused right now",
+    sidebarHeader: "Unused right now",
     noDataFoundMessage: "No data found",
     startTimeAlias: "start",
     endTimeAlias: "end",
@@ -41,4 +42,9 @@ let params = {
     refreshFunction: refreshFunction
 }
 
+//Create the chart.
+//On first render the chart will call its refereshData function on its own.
 let ganttChart = new Gantt("chart", params);
+
+//To refresh the chart's data
+ganttChart.refreshData();

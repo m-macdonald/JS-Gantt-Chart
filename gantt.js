@@ -16,13 +16,13 @@
 class Gantt {
     constructor(staticID, params) {
         this.staticID = staticID;
-        this.sidebarHeader = params.sidebarHeader;
-        this.noDataFoundMessage = params.noDataFoundMessage;
+        this.sidebarHeader = params.sidebarHeader || 'Unused parameter right now';
+        this.noDataFoundMessage = params.noDataFoundMessage || 'No data found.';
         this.startTimeAlias = params.startTimeAlias || 'startTime';
         this.endTimeAlias = params.endTimeAlias || 'endTime';
         this.idAlias = params.idAlias || 'id';
         this.rowAlias = params.rowAlias || 'rowTitle';
-        this.linkAlias = params.linkAlias || 'link';
+        this.linkAlias = params.linkAlias;
         this.tooltipAlias = params.tooltipAlias || 'tooltip';
         this.groupBy = params.groupBy ? params.groupBy.split(',').map(group => group.trim()) : [];
         this.data = {};
@@ -31,7 +31,7 @@ class Gantt {
         this.maxTime;
         this.minTime;
         this.refreshFunction = params.refreshFunction;
-        console.log(this);
+
         this.wrapper = document.createElement('div');
         this.wrapper.classList.add('gfb-gantt-wrapper');
         document.getElementById(this.staticID).appendChild(this.wrapper);
