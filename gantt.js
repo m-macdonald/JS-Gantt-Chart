@@ -38,14 +38,6 @@ class Gantt {
         this.refreshData();
     }
 
-    // firstRender() {
-    //     //Creates and adds the wrapper for the chart to the page
-    //     this.wrapper = document.createElement('div');
-    //     this.wrapper.classList.add('gfb-gantt-wrapper');
-    //     document.getElementById(this.staticID).appendChild(this.wrapper);
-    //     this.refreshData();
-    // }
-
     refreshData() {
         this.rawData = this.refreshFunction();
         this.empty();
@@ -55,26 +47,6 @@ class Gantt {
         }
         this.processData();
         this.render();
-        // apex.server.plugin(
-        //     this.ajaxIdentifier,
-        //     {
-        //         pageItems: this.pageItemsToSubmit
-        //     },
-        //     {
-        //         refreshObject: '#' + this.staticID,
-        //         //loadingIndicator: this.staticID,
-        //         success: pData => {
-        //             this.rawData = pData;
-        //             this.empty();
-        //             if (!this.rawData.row.length) {
-        //                 this.noDataFound();
-        //                 return;
-        //             }
-        //             this.processData(pData.row);
-        //             this.render();
-        //         }
-        //     }
-        // )
     }
 
     processData() {
@@ -91,16 +63,6 @@ class Gantt {
 
         this.data = groupedData;
 
-
-        // if(this.groupBy){
-        //     
-            
-            
-        // }
-        // else
-        //     this.data = sortedData;
-       
-        console.log(this.data, this.rawData)
         //Get the max and min datetimes in the dataset
         //Used to determine the first and last times that are shown in the chart
         let maxTime = this.rawData.reduce((max, curr) => !!curr[this.endTimeAlias] ? max > new Date(curr[this.endTimeAlias]) ? max : new Date(curr[this.endTimeAlias]) : max, new Date(0));
@@ -236,19 +198,21 @@ class Gantt {
         let bindElements = document.querySelectorAll(`#${this.staticID} .gfb-gantt-row-entry`);
 
         bindElements.forEach(bindElement => {
-            let toolTipElement;
+            let toolTipElement,
+                timeout;
             bindElement.addEventListener('mouseover', e => {
                 let target = e.target,
                     indexArray = target.getAttribute('data-index').split('-'),
                     position = getElOffset(target),
                     targetHeight = getBoundingRect(target).height,
                     this1 = this;
+                console.log('mouseover activated');
                 indexArray.push(this.tooltipAlias);
                 position.top += (targetHeight + 5);
                 target.classList.add('hovering');
                 //Set a delay on the tooltip appearing so that it doesn't immediately appear if the user happens to swipe their mouse across the screen.
                 //At the end of the delay we check to see if the mouse is still hovering, at which point we will show the tooltip
-                setTimeout(() => {
+                timeout = setTimeout(() => {
                     if (!target.classList.contains('hovering'))
                         return;
                     toolTipElement = document.createElement(`div`);
@@ -273,6 +237,8 @@ class Gantt {
 
             bindElement.addEventListener('mouseout', e => {
                 let target = e.target;
+                
+                clearTimeout(timeout);
                 target.classList.remove('hovering');
                 if (toolTipElement)
                     fadeOut(toolTipElement, 300, () => toolTipElement.remove());
