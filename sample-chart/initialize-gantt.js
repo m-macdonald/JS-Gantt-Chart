@@ -63,7 +63,7 @@ let params = {
 }
 
 //Create the chart.
-//On first render the chart will call its refereshData function on its own.
+//On first render the chart will call its refreshData function on its own.
 let ganttChart = new Gantt("chart", params);
 
 //To refresh the chart's data
