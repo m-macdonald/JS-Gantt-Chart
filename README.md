@@ -8,7 +8,7 @@ The chart's constructor expects two parameters:
 1. The id for the element that will hold the chart. A string
 2. An object holding a number of parameters for the chart:
 ```
-noDataFoundMessage:   If the chart refreshes and does not receive any data, this message is displayed. A string
+noDataFoundMessage:   If the chart refreshes and does not receive any data, this message is displayed. A string or HTML
 startTimeAlias:       The name of the property within the objects of the array that holds the event's start time. A string
 endTimeAlias:         The name of the property within the objects of the array that holds the event's end time. A string
 idAlias:              The name of the property within the objects of the array that holds the id of the record. 
@@ -21,6 +21,7 @@ groupBy:              This parameter functions like a SQL group by. Providing it
                       The values should be in order of decreasing importance.
                       Each of the values in the string should be a property within the objects being provided to the chart.
                       ex. 'state, county, city'
+groupByAlias:         A comma delimited list of the properties in the given data that hold the names of each group. Should have the same number of entries as the groupBy parameter and will only be used if that parameter has also been provided. This is an optional parameter. If left null, the group names will be derived from the groupBy parameter instead.
 refreshFunction:      The function that the chart should call when its refreshData() function is invoked. This function should return an array of objects.
 ```
 
