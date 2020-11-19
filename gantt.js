@@ -1,18 +1,3 @@
-// let apexGantt = {
-//     initialize: (staticID, params) => {
-//         let g = new Gantt(staticID, params);
-//         g.firstRender();
-
-//         apex.region.create(
-//             params.regionID,
-//             {
-//                 type: 'gantt',
-//                 refresh: () => g.refreshData()
-//             }
-//         )
-//     }
-// }
-
 class Gantt {
     constructor(staticID, params) {
         this.staticID = staticID;
@@ -25,6 +10,7 @@ class Gantt {
         this.linkAlias = params.linkAlias;
         this.tooltipAlias = params.tooltipAlias || 'tooltip';
         this.groupBy = params.groupBy ? params.groupBy.split(',').map(group => group.trim()) : [];
+        this.groupByAlias = this.groupBy ? (params.groupByAlias ? params.groupByAlias.split(',').map(group => group.trim()) : this.groupBy) : [];
         this.data = {};
         this.rawData = [];
         this.divisionCount = 0;
@@ -59,6 +45,7 @@ class Gantt {
             groupedData = {};
         for (let dataRow of sortedData) {
             this.groupArray(groupedData, dataRow);
+            //console.log(groupedData);
         }
 
         this.data = groupedData;
@@ -89,10 +76,14 @@ class Gantt {
             return;
         }
 
+
+        let groupingProperty = result[entry[this.groupBy[iter]]];
+        let chartEntry = result[entry[this.idAlias]];
+
         //If we can't find a property within result for the groupBy parameter at this level we create a new one.
         if (!result[entry[this.groupBy[iter]]] && iter < this.groupBy.length) {
-            result[entry[this.groupBy[iter]]] = {};
-            nextResult = result[entry[this.groupBy[iter]]]
+            result[entry[this.groupBy[iter]]] = {groupName: entry[this.groupByAlias[iter]]};
+            nextResult = result[entry[this.groupBy[iter]]];
         }
         else if (!result[entry[this.idAlias]] && iter === this.groupBy.length) {
             result[entry[this.idAlias]] = [];
@@ -167,12 +158,12 @@ class Gantt {
 
         function buildContent(data, result, depth = 0, dataIndex = []) {
             for (let prop in data) {
-                console.log(prop);
                 if (data[prop]) {
-                    dataIndex.push(prop);
+                    if(prop !== 'groupName')
+                        dataIndex.push(prop);
+                    
                     if (typeof data[prop] === "object" && !Array.isArray(data[prop])) {
-
-                        result.push(`<div class="gfb-gantt-grouping-header" style="padding-left: ${5 + (depth * 20)}px">${prop}</div><div>`);
+                        result.push(`<div class="gfb-gantt-grouping-header" style="padding-left: ${5 + (depth * 20)}px">${data[prop].groupName}</div><div>`);
                         depth += 1;
                         buildContent(data[prop], result, depth, dataIndex);
                         depth -= 1;
@@ -206,7 +197,6 @@ class Gantt {
                     position = getElOffset(target),
                     targetHeight = getBoundingRect(target).height,
                     this1 = this;
-                console.log('mouseover activated');
                 indexArray.push(this.tooltipAlias);
                 position.top += (targetHeight + 5);
                 target.classList.add('hovering');
@@ -237,7 +227,7 @@ class Gantt {
 
             bindElement.addEventListener('mouseout', e => {
                 let target = e.target;
-                
+
                 clearTimeout(timeout);
                 target.classList.remove('hovering');
                 if (toolTipElement)
